@@ -67,6 +67,7 @@ function initOpenCardImg(evt) {
     openPopup(popupImgElement);
     popupImg.src = targetImage.src;
     popupImgTitle.textContent = targetImage.alt;
+    popupImg.alt = targetImage.alt;
 }
 
 function createCard(name, link) {
@@ -80,8 +81,8 @@ function createCard(name, link) {
     cardImg.addEventListener('click', initOpenCardImg);
 
     cardElement.querySelector('.card__title').innerText = name;
-    cardElement.querySelector('.card__img').src = link;
-    cardElement.querySelector('.card__img').alt = name;
+    cardImg.src = link;
+    cardImg.alt = name;
     return cardElement;
 }
 
