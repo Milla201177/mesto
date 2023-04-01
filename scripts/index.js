@@ -54,15 +54,15 @@ const popupImgCloseElement = document.querySelector('.popup__close_type_img');
 function closePopup (item) {item.classList.remove('popup_opened');}
 function openPopup (item) {item.classList.add('popup_opened');}
 
-function initDeleteCard() {
-    const buttonTrash = document.querySelector('.card__button-trash');
+function DeleteCard(evt) {
+    const buttonTrash = evt.target;
     const parentItem = buttonTrash.closest('.card__item');
     parentItem.remove()
 }
-function initToggleLike(evt) {
+function ToggleLike(evt) {
     evt.target.classList.toggle('card__button-like_active');
 }
-function initOpenCardImg(evt) {
+function OpenCardImg(evt) {
     const targetImage = evt.target;
     openPopup(popupImgElement);
     popupImg.src = targetImage.src;
@@ -76,9 +76,9 @@ function createCard(name, link) {
     const buttonLike = cardElement.querySelector('.card__button-like');
     const cardImg = cardElement.querySelector('.card__img');
 
-    buttonTrash.addEventListener('click', initDeleteCard);
-    buttonLike.addEventListener('click', initToggleLike);
-    cardImg.addEventListener('click', initOpenCardImg);
+    buttonTrash.addEventListener('click', DeleteCard);
+    buttonLike.addEventListener('click', ToggleLike);
+    cardImg.addEventListener('click', OpenCardImg);
 
     cardElement.querySelector('.card__title').innerText = name;
     cardImg.src = link;
