@@ -50,19 +50,71 @@ const popupEditCloseElement = document.querySelector('.popup__close_type_edit');
 const popupAddCloseElement = document.querySelector('.popup__close_type_add');
 const popupImgCloseElement = document.querySelector('.popup__close_type_img');
 
+//закрытие нажатием на esc
+document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape') {
+        closePopup(popupEditElement);
+        closePopup(popupAddElement);
+        closePopup(popupImgElement);
+    }});
+
+//закрытие кликом на оверлей
+//let closePopupByClickOnOverlay = function (evt) {
+//       console.log(evt.target, evt.currentTarget);
+//    if (evt.target === evt.currentTarget) {
+//    closePopup();
+//    }
+//  };
+//    popupElement.addEventListener('click', closePopupByClickOnOverlay);
+
+//валидация. редактировать профиль
+//оба поля обязательные
+// в поле «Имя» должно быть от 2 до 40 символов;
+// в поле «О себе» должно быть от 2 до 200 символов;
+//не активная кнопка
+//formEditElement.removeEventListener('submit', editFormSubmit)
+
+//const input = document.querySelector('#input');
+//const error = document.querySelector('#error');
+// Блок с ошибкой изначально скрыт
+//input.addEventListener('keydown', function (evt) {
+    // Проверяем, была ли введена цифра
+//    if (Number.isNaN(Number(evt.key))) {
+        // Если пользователь ввёл не цифру, показываем блок с ошибкой
+//        error.style.display = 'block';
+//    };
+//});
+
+//валидация. новое место
+//оба поля обязательные
+// в поле «Название» должно быть от 1 до 30 символов
+// в поле «Ссылка на картинку» должен быть URL
+//не активная кнопка
+//formAddElement.removeEventListener('submit',
+
+//const input = document.querySelector('#input');
+//const error = document.querySelector('#error');
+// Блок с ошибкой изначально скрыт
+//input.addEventListener('keydown', function (evt) {
+// Проверяем, была ли введена цифра
+//    if (Number.isNaN(Number(evt.key))) {
+// Если пользователь ввёл не цифру, показываем блок с ошибкой
+//        error.style.display = 'block';
+//    };
+//});
 
 function closePopup (item) {item.classList.remove('popup_opened');}
 function openPopup (item) {item.classList.add('popup_opened');}
 
-function DeleteCard(evt) {
+function deleteCard(evt) {
     const buttonTrash = evt.target;
     const parentItem = buttonTrash.closest('.card__item');
     parentItem.remove()
 }
-function ToggleLike(evt) {
+function toggleLike(evt) {
     evt.target.classList.toggle('card__button-like_active');
 }
-function OpenCardImg(evt) {
+function openCardImg(evt) {
     const targetImage = evt.target;
     openPopup(popupImgElement);
     popupImg.src = targetImage.src;
@@ -76,9 +128,9 @@ function createCard(name, link) {
     const buttonLike = cardElement.querySelector('.card__button-like');
     const cardImg = cardElement.querySelector('.card__img');
 
-    buttonTrash.addEventListener('click', DeleteCard);
-    buttonLike.addEventListener('click', ToggleLike);
-    cardImg.addEventListener('click', OpenCardImg);
+    buttonTrash.addEventListener('click', deleteCard);
+    buttonLike.addEventListener('click', toggleLike);
+    cardImg.addEventListener('click', openCardImg);
 
     cardElement.querySelector('.card__title').innerText = name;
     cardImg.src = link;
@@ -86,13 +138,13 @@ function createCard(name, link) {
     return cardElement;
 }
 
-initialCards.forEach (initialCards => {
+initialCards.forEach(initialCards => {
     const newCard = createCard(initialCards.name, initialCards.link)
     createCard();
     cards.append(newCard);
 })
 
-formAddElement.addEventListener('submit', (evt) => {
+function addFormSubmit (evt) {
     evt.preventDefault()
     const newCard = createCard(popupInputName.value, popupInputImgLink.value, )
     newCard.src = popupInputImgLink.value;
@@ -100,13 +152,9 @@ formAddElement.addEventListener('submit', (evt) => {
     createCard()
     closePopup(popupAddElement)
     cards.prepend(newCard);
-})
+}
+formAddElement.addEventListener('submit', addFormSubmit);
 
-popupEditOpenElement.addEventListener('click', () => {
-    openPopup(popupEditElement);
-    nameInput.textContent = nameProfile.value;
-    jobInput.textContent = jobProfile.value;
-})
 function editFormSubmit (evt) {
     evt.preventDefault();
     nameProfile.textContent = nameInput.value;
@@ -114,22 +162,24 @@ function editFormSubmit (evt) {
     closePopup(popupEditElement);
 }
 formEditElement.addEventListener('submit', editFormSubmit);
+
+popupEditOpenElement.addEventListener('click', () => {
+    openPopup(popupEditElement);
+    nameInput.textContent = nameProfile.value;
+    jobInput.textContent = jobProfile.value;
+})
 popupEditCloseElement.addEventListener('click', () => {
     closePopup(popupEditElement);
 })
-
-popupImgCloseElement.addEventListener('click', () => {
-    closePopup(popupImgElement)
-})
-
 popupAddCloseElement.addEventListener('click', () => {
     closePopup(popupAddElement);
 })
 popupAddOpenElement.addEventListener('click', () => {
     openPopup(popupAddElement);
 })
-
-
+popupImgCloseElement.addEventListener('click', () => {
+    closePopup(popupImgElement)
+})
 
 
 
