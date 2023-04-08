@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mesto</title>
     <link rel="stylesheet" href="./pages/index.css">
+    <script src="./scripts/constants.js" defer></script>
     <script src="./scripts/index.js" defer></script>
+    <script src="./scripts/validate.js" defer></script>
 </head>
 
 <body class="page">
@@ -39,10 +41,16 @@
        <div class="popup__container">
            <button type="button" class="popup__close popup__close_type_edit content__button"><img class="popup__close-img" alt="закрыть" src="images/close_icon.svg"></button>
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form name="form" class="popup__form popup__form_type_edit" method="get">
-                <label><input class="popup__input popup__input_type_name" type="text" name="name" required placeholder="Имя"></label>
-                <label><input class="popup__input popup__input_type_job" type="text" name="surname" required placeholder="О себе"></label>
-                <button type="submit" class="popup__save-button">Сохранить</button>
+            <form novalidate name="formEdit" class="popup__form popup__form-set popup__form_type_edit" method="get">
+                <label>
+                    <input id="popup__input_type_name" minlength="2" maxlength="40" class="popup__input popup__input_type_name" type="text" name="name" required placeholder="Имя">
+                    <span id="popup__input_type_name_error" class="popup__input_error popup__input_type_name_error"></span>
+                </label>
+                <label>
+                    <input id="popup__input_type_job" minlength="2" maxlength="200" class="popup__input popup__input_type_job" type="text" name="job" required placeholder="О себе">
+                    <span id="popup__input_type_job_error" class="popup__input_error popup__input_type_job_error"></span>
+                </label>
+                <button disabled type="submit" class="popup__save-button popup__save-button_edit popup__btn_disabled">Сохранить</button>
             </form>
         </div>
     </section>
@@ -51,10 +59,16 @@
         <div class="popup__container">
             <button type="button" class="popup__close popup__close_type_add content__button"><img class="popup__close-img" alt="закрыть" src="images/close_icon.svg"></button>
             <h2 class="popup__title">Новое место</h2>
-            <form name="form" class="popup__form popup__form_type_add" method="get">
-                <label><input class="popup__input popup__input_type_img-name" placeholder="Название" type="text" name="img"></label>
-                <label><input class="popup__input popup__input_type_img" placeholder="Ссылка на картинку" type="url" name="src"></label>
-                <button type="submit" class="popup__save-button">Создать</button>
+            <form novalidate name="formAdd" class="popup__form popup__form-set popup__form_type_add" method="get">
+                <label>
+                    <input id="popup__input_type_img-name" minlength="1" maxlength="30" class="popup__input popup__input_type_img-name" placeholder="Название" type="text" name="img" required>
+                    <span id="popup__input_type_img-name_error" class="popup__input_error popup__input_type_img-name_error"></span>
+                </label>
+                <label>
+                    <input id="popup__input_type_img" class="popup__input popup__input_type_img" placeholder="Ссылка на картинку" type="url" name="src" required>
+                    <span id="popup__input_type_img_error" class="popup__input_error popup__input_type_img_error"></span>
+                </label>
+                <button disabled type="submit" class="popup__save-button popup__save-button_add popup__btn_disabled">Создать</button>
             </form>
         </div>
     </section>
