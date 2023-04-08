@@ -1,12 +1,12 @@
 
 const showInputError = (formElement, inputElement, errorMessage) => {
-    const errorElement = formElement.querySelector(`.${inputElement.id}_error`);
+    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.add('popup__input_type_error');
     errorElement.textContent = errorMessage;
 };
 
 const hideInputError = (formElement, inputElement) => {
-    const errorElement = formElement.querySelector(`.${inputElement.id}_error`);
+    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove('popup__input_type_error');
     errorElement.textContent = '';
 };
@@ -50,11 +50,11 @@ function hasInvalidInput (inputList) {
 
 function toggleButtonState(inputList, buttonElement) {
     if (hasInvalidInput(inputList)) {
-        buttonElement.classList.add('popup__btn_disabled');
+        buttonElement.classList.add('popup__btn-disabled');
         buttonElement.setAttribute('disabled', true);
     }
     else {
-        buttonElement.classList.remove('popup__btn_disabled');
+        buttonElement.classList.remove('popup__btn-disabled');
         buttonElement.removeAttribute('disabled');
     }
 }
