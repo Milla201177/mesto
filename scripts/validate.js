@@ -19,6 +19,17 @@ const checkInputValidity = (formElement, inputElement) => {
     }
 };
 
+
+
+const validationConfig = {
+    formElement: '.popup__form',
+    inputElement: '.popup__input',
+    buttonElement: '.popup__save-button',
+    inactiveButtonClass: 'popup__btn-disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error'
+}
+
 const setEventListeners = (formElement) => {
     const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
     const buttonElement = formElement.querySelector('.popup__save-button');
@@ -32,7 +43,7 @@ const setEventListeners = (formElement) => {
 };
 
 function enableValidation () {
-    const formList = Array.from(document.querySelectorAll('.popup__form'));
+ const formList = Array.from(document.querySelectorAll('.popup__form'));
     formList.forEach((formElement) => {
         formElement.addEventListener('submit', (evt) => {
             evt.preventDefault();
@@ -41,6 +52,13 @@ function enableValidation () {
     });
 }
 enableValidation()
+
+//function enableValidation(settings) { // принимает аргумет - объект, который внутри функции мы назовем settings
+                                      //.....
+//    const forms = [...document.querySelectorAll(settings.formSelector)] // читаем из settings поле formSelector и получаем значение '.popup__form'
+//}
+
+//const formList = Array.from(document.querySelectorAll('.popup__form'));
 
 function hasInvalidInput (inputList) {
     return inputList.some((inputElement) => {
