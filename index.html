@@ -61,11 +61,11 @@
             <h2 class="popup__title">Новое место</h2>
             <form novalidate name="formAdd" class="popup__form popup__form-set popup__form_type_add" method="get">
                 <label>
-                    <input id="input-img-name" minlength="1" maxlength="30" class="popup__input input-img-name" placeholder="Название" type="text" name="img" required>
+                    <input id="input-img-name" minlength="1" maxlength="30" class="popup__input input-img-name" placeholder="Название" type="text" name="name" required>
                     <span id="input-img-name-error" class="popup__error input-img-name-error"></span>
                 </label>
                 <label>
-                    <input id="input-img" class="popup__input input-img" placeholder="Ссылка на картинку" type="url" name="src" required>
+                    <input id="input-img" class="popup__input input-img" placeholder="Ссылка на картинку" type="url" name="link" required>
                     <span id="input-img-error" class="popup__error input-img-error"></span>
                 </label>
                 <button disabled type="submit" class="popup__save-button popup__save-button_add popup__btn-disabled">Создать</button>
@@ -87,7 +87,7 @@
     <p class="footer__copyright">© 2020 Mesto Russia</p>
 </footer>
 
-<template class="template">
+<template class="template" id="template">
     <div class="card__item">
         <button type="button" class="card__button-trash content__button" name="trash"></button>
             <img class="card__img" alt="#" src="#">
