@@ -1,3 +1,33 @@
+//import initialCards from './constants.js'
+//import FormValidator from './formValidator.js'
+//import Card from './card.js'
+
+const initialCards = [
+    {
+        name: 'Архыз',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+        name: 'Челябинская область',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+        name: 'Иваново',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+        name: 'Камчатка',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+        name: 'Холмогорский район',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+        name: 'Байкал',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    }
+];
 const formEditElement = document.forms.formEdit;
 const popupEditElement = document.querySelector('.popup_type_edit');
 const inputNameFormProfile = formEditElement.elements.name;
@@ -11,8 +41,6 @@ const formAddElement = document.forms.formAdd;
 const cards = document.querySelector(".cards");
 
 const popupImgElement = document.querySelector('.popup_type_img');
-const imgElementPopupImg = popupImgElement.querySelector('.popup__img');
-const popupImgTitle = popupImgElement.querySelector('.popup__img-title');
 
 const popupEditOpenElement = document.querySelector('.profile__edit-button');
 const popupAddOpenElement = document.querySelector('.profile__add-button');
@@ -23,6 +51,88 @@ const popupList = Array.from(document.querySelectorAll('.popup'));
 
 const itemTemplate = "#template";
 
+class FormValidator {
+    constructor(validationConfig, form) {
+        this.formSelector = validationConfig.formSelector
+        this.inputSelector = validationConfig.inputSelector
+        this.submitButtonSelector = validationConfig.submitButtonSelector
+        this.inactiveButtonClass = validationConfig.inactiveButtonClass
+        this.inputErrorClass = validationConfig.inputErrorClass
+        this.formInputs = Array.from(form.querySelectorAll(this.inputSelector))
+        this.formButton = form.querySelector(this.submitButtonSelector)
+    }
+
+    enableValidation() {
+        this.forms = Array.from(document.querySelectorAll(this.formSelector))
+        this.forms.forEach(form => {
+            form.addEventListener('submit', (evt) => {
+                evt.preventDefault();
+            })
+            this._setEventListeners(form)
+        })
+    };
+
+    _enableButton = () => {
+        this.formButton.classList.remove(this.inactiveButtonClass);
+        this.formButton.removeAttribute('disabled');
+    };
+
+    _disableButton = () => {
+        this.formButton.classList.add(this.inactiveButtonClass);
+        this.formButton.setAttribute('disabled', true);
+    };
+
+    _hideInputError = (input, currentInputErrorContainer) => {
+        currentInputErrorContainer.textContent = ''
+        input.classList.remove(this.inputErrorClass);
+    };
+
+    _showInputError = (input, currentInputErrorContainer) => {
+        input.classList.add(this.inputErrorClass);
+        currentInputErrorContainer.textContent = input.validationMessage;
+    };
+
+    _checkInputValidity = (input, inputErrorClass) => {
+        this.currentInputErrorContainer = document.querySelector(`.${input.id}-error`)
+
+        if (input.checkValidity()) {
+            this._hideInputError(input, this.currentInputErrorContainer, inputErrorClass);
+        } else {
+            this._showInputError(input, this.currentInputErrorContainer, inputErrorClass);
+        }
+    };
+
+    _setEventListeners = () => {
+        this._disableButton(this.formButton)
+        this.formInputs.forEach(input => {
+            input.addEventListener('input', () => {
+                this._checkInputValidity(input)
+                if (this._hasInvalidInput()) {
+                    this._disableButton(this.formButton)
+                } else {
+                    this._enableButton(this.formButton)
+                }
+            })
+        })
+    };
+
+    _hasInvalidInput = () => {
+        return this.formInputs.some(item => !item.validity.valid)
+    };
+}
+
+const validationConfig = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__save-button',
+    inactiveButtonClass: 'popup__btn-disabled',
+    inputErrorClass: 'popup__input_type_error'
+}
+const formValidatorEdit = new FormValidator(validationConfig, formEditElement)
+formValidatorEdit.enableValidation()
+const formValidatorAdd = new FormValidator(validationConfig, formAddElement)
+formValidatorAdd.enableValidation()
+
 class Card {
     constructor(cardElement, itemTemplate) {
         this.cardElement = cardElement;
@@ -32,6 +142,8 @@ class Card {
         this.buttonLike = this.cloneTemplateElement.querySelector('.card__button-like');
         this.cardImg = this.cloneTemplateElement.querySelector('.card__img');
         this.cardTitle = this.cloneTemplateElement.querySelector('.card__title');
+        this.imgElementPopupImg = popupImgElement.querySelector('.popup__img');
+        this.popupImgTitle = popupImgElement.querySelector('.popup__img-title');
     }
 
     createCard = () => {
@@ -58,9 +170,9 @@ class Card {
     _openCardImg = (evt) => {
         this.targetImage = evt.target;
         openPopup(popupImgElement);
-        imgElementPopupImg.src = this.targetImage.src;
-        popupImgTitle.textContent = this.targetImage.alt;
-        imgElementPopupImg.alt = this.targetImage.alt;
+        this.imgElementPopupImg.src = this.targetImage.src;
+        this.popupImgTitle.textContent = this.targetImage.alt;
+        this.imgElementPopupImg.alt = this.targetImage.alt;
     }
 
     //слушатели
@@ -76,6 +188,7 @@ initialCards.forEach(cardElement => {
     this.newCard = new Card(cardElement, itemTemplate)
     cards.append(this.newCard.createCard());
 })
+
 
 //отправить карточку
 formAddElement.addEventListener('submit', (evt) => {
@@ -95,7 +208,7 @@ popupAddOpenElement.addEventListener('click', () => {
     openPopup(popupAddElement);
     formAddElement.reset()
     this.saveButtonAdd = document.querySelector('.popup__save-button_add')
-    disableButton(this.saveButtonAdd, validationConfig)
+    formValidatorAdd._disableButton(this.saveButtonAdd, validationConfig)
 })
 
 //закрыть по ESC
@@ -154,6 +267,7 @@ popupEditOpenElement.addEventListener('click', () => {
 //закрыть попап редакции профиля
 popupEditCloseElement.addEventListener('click', () => {
     closePopup(popupEditElement);
+//    formValidatorEdit._hideInputError()
 })
 
 //закрыть попап большой картинки
