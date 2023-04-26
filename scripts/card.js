@@ -1,5 +1,6 @@
-//export default
-class Card {
+import {openPopup} from "./index.js";
+
+export default class Card {
     constructor(cardElement, itemTemplate) {
         this.cardElement = cardElement;
         this.itemTemplate = itemTemplate;
@@ -8,8 +9,9 @@ class Card {
         this.buttonLike = this.cloneTemplateElement.querySelector('.card__button-like');
         this.cardImg = this.cloneTemplateElement.querySelector('.card__img');
         this.cardTitle = this.cloneTemplateElement.querySelector('.card__title');
-        this.imgElementPopupImg = popupImgElement.querySelector('.popup__img');
-        this.popupImgTitle = popupImgElement.querySelector('.popup__img-title');
+        this.imgElementPopupImg = document.querySelector('.popup__img');
+        this.popupImgTitle = document.querySelector('.popup__img-title');
+        this.popupImgElement = document.querySelector('.popup_type_img');
     }
 
     createCard = () => {
@@ -35,7 +37,7 @@ class Card {
 //открыть картинку на полный экран
     _openCardImg = (evt) => {
         this.targetImage = evt.target;
-        openPopup(popupImgElement);
+        openPopup(this.popupImgElement);
         this.imgElementPopupImg.src = this.targetImage.src;
         this.popupImgTitle.textContent = this.targetImage.alt;
         this.imgElementPopupImg.alt = this.targetImage.alt;

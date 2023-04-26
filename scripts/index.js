@@ -1,6 +1,8 @@
-//import initialCards from './constants.js'
-//import FormValidator from './formValidator.js'
-//import Card from './card.js'
+export {openPopup}
+
+import {initialCards} from './constants.js'
+import Card from './card.js'
+import FormValidator from './formValidator.js'
 
 const formEditElement = document.forms.formEdit;
 const popupEditElement = document.querySelector('.popup_type_edit');
@@ -8,14 +10,10 @@ const inputNameFormProfile = formEditElement.elements.name;
 const jobInput = formEditElement.elements.job;
 const nameProfile = document.querySelector('.profile__name');
 const jobProfile = document.querySelector('.profile__job');
-
 const popupAddElement = document.querySelector('.popup_type_add');
 const formAddElement = document.forms.formAdd;
-
 const cards = document.querySelector(".cards");
-
 const popupImgElement = document.querySelector('.popup_type_img');
-
 const popupEditOpenElement = document.querySelector('.profile__edit-button');
 const popupAddOpenElement = document.querySelector('.profile__add-button');
 const popupEditCloseElement = document.querySelector('.popup__close_type_edit');
@@ -40,17 +38,16 @@ formValidatorAdd.enableValidation()
 
 //добавить карточки из массива
 initialCards.forEach(cardElement => {
-    this.newCard = new Card(cardElement, itemTemplate)
-    cards.append(this.newCard.createCard());
+    const newCard = new Card(cardElement, itemTemplate)
+    cards.append(newCard.createCard());
 })
-
 
 //отправить карточку
 formAddElement.addEventListener('submit', (evt) => {
     evt.preventDefault()
-    this.newCard = new Card ({name: formAddElement.elements.name.value, link: formAddElement.elements.link.value }, itemTemplate)
+    const newCard = new Card ({name: formAddElement.elements.name.value, link: formAddElement.elements.link.value }, itemTemplate)
     closePopup(popupAddElement)
-    cards.prepend(this.newCard.createCard());
+    cards.prepend(newCard.createCard());
 })
 
 //закрыть попап добавление карточки по клику на х
@@ -62,8 +59,8 @@ popupAddCloseElement.addEventListener('click', () => {
 popupAddOpenElement.addEventListener('click', () => {
     openPopup(popupAddElement);
     formAddElement.reset()
-    this.saveButtonAdd = document.querySelector('.popup__save-button_add')
-    formValidatorAdd._disableButton(this.saveButtonAdd, validationConfig)
+    const saveButtonAdd = document.querySelector('.popup__save-button_add')
+    formValidatorAdd._disableButton(saveButtonAdd, validationConfig)
 })
 
 //закрыть по ESC
@@ -122,7 +119,6 @@ popupEditOpenElement.addEventListener('click', () => {
 //закрыть попап редакции профиля
 popupEditCloseElement.addEventListener('click', () => {
     closePopup(popupEditElement);
-//    formValidatorEdit._hideInputError()
 })
 
 //закрыть попап большой картинки
