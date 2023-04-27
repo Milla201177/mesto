@@ -61,3 +61,4 @@ export default class FormValidator {
         return this.formInputs.some(item => !item.validity.valid)
     };
 }
+

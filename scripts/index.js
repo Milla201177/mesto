@@ -33,7 +33,6 @@ formValidatorEdit.enableValidation()
 const formValidatorAdd = new FormValidator(validationConfig, formAddElement)
 formValidatorAdd.enableValidation()
 
-
 //создать новую карточку
 function createNewCard(element){
     const newCard = new Card(element, itemTemplate)

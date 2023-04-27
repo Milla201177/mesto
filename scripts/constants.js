@@ -1,4 +1,5 @@
 export {initialCards, openPopup, closePopup, imgElementPopupImg, popupImgTitle, popupImgElement}
+
 const initialCards = [
     {
         name: 'Архыз',
@@ -55,7 +56,7 @@ function openPopup (item) {
 function closePopup (item) {
     item.classList.remove('popup_opened');
     document.removeEventListener('keydown', closePopupByKeydownOnESC);
-    item.removeEventListener('click', closePopupByClickOnOverlay)
+    item.removeEventListener('click', closePopupByClickOnOverlay);
 }
 
 const imgElementPopupImg = document.querySelector('.popup__img');
