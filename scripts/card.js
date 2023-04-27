@@ -1,4 +1,4 @@
-import {openPopup} from "./index.js";
+import {openPopup, imgElementPopupImg, popupImgTitle, popupImgElement} from "./constants.js";
 
 export default class Card {
     constructor(cardElement, itemTemplate) {
@@ -9,9 +9,6 @@ export default class Card {
         this.buttonLike = this.cloneTemplateElement.querySelector('.card__button-like');
         this.cardImg = this.cloneTemplateElement.querySelector('.card__img');
         this.cardTitle = this.cloneTemplateElement.querySelector('.card__title');
-        this.imgElementPopupImg = document.querySelector('.popup__img');
-        this.popupImgTitle = document.querySelector('.popup__img-title');
-        this.popupImgElement = document.querySelector('.popup_type_img');
     }
 
     createCard = () => {
@@ -23,24 +20,21 @@ export default class Card {
     }
 
     //like
-    _toggleLike = (evt) => {
-        evt.target.classList.toggle('card__button-like_active');
+    _toggleLike = () => {
+        this.buttonLike.classList.toggle('card__button-like_active');
     }
 
 //удалить карточку
-    _deleteCard = (evt) => {
-        this.buttonTrash = evt.target;
-        this.parentItem = this.buttonTrash.closest('.card__item');
-        this.parentItem.remove();
+    _deleteCard = () => {
+        this.cloneTemplateElement.remove()
     }
 
 //открыть картинку на полный экран
-    _openCardImg = (evt) => {
-        this.targetImage = evt.target;
-        openPopup(this.popupImgElement);
-        this.imgElementPopupImg.src = this.targetImage.src;
-        this.popupImgTitle.textContent = this.targetImage.alt;
-        this.imgElementPopupImg.alt = this.targetImage.alt;
+    _openCardImg = () => {
+        openPopup(popupImgElement);
+        imgElementPopupImg.src = this.cardImg.src;
+        popupImgTitle.textContent = this.cardImg.alt;
+        imgElementPopupImg.alt = this.cardImg.alt;
     }
 
     //слушатели

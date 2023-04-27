@@ -10,13 +10,7 @@ export default class FormValidator {
     }
 
     enableValidation() {
-        this.forms = Array.from(document.querySelectorAll(this.formSelector))
-        this.forms.forEach(form => {
-            form.addEventListener('submit', (evt) => {
-                evt.preventDefault();
-            })
-            this._setEventListeners(form)
-        })
+        this._setEventListeners()
     };
 
     _enableButton = () => {

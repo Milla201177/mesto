@@ -1,6 +1,4 @@
-export {openPopup}
-
-import {initialCards} from './constants.js'
+import {initialCards, openPopup, closePopup} from './constants.js'
 import Card from './card.js'
 import FormValidator from './formValidator.js'
 
@@ -19,7 +17,6 @@ const popupAddOpenElement = document.querySelector('.profile__add-button');
 const popupEditCloseElement = document.querySelector('.popup__close_type_edit');
 const popupAddCloseElement = document.querySelector('.popup__close_type_add');
 const popupImgCloseElement = document.querySelector('.popup__close_type_img');
-const popupList = Array.from(document.querySelectorAll('.popup'));
 
 const itemTemplate = "#template";
 
@@ -30,24 +27,29 @@ const validationConfig = {
     inactiveButtonClass: 'popup__btn-disabled',
     inputErrorClass: 'popup__input_type_error'
 }
+
 const formValidatorEdit = new FormValidator(validationConfig, formEditElement)
 formValidatorEdit.enableValidation()
 const formValidatorAdd = new FormValidator(validationConfig, formAddElement)
 formValidatorAdd.enableValidation()
 
 
+//создать новую карточку
+function createNewCard(element){
+    const newCard = new Card(element, itemTemplate)
+    return newCard.createCard()
+}
+
 //добавить карточки из массива
-initialCards.forEach(cardElement => {
-    const newCard = new Card(cardElement, itemTemplate)
-    cards.append(newCard.createCard());
+initialCards.forEach(element => {
+    cards.append(createNewCard(element))
 })
 
 //отправить карточку
 formAddElement.addEventListener('submit', (evt) => {
     evt.preventDefault()
-    const newCard = new Card ({name: formAddElement.elements.name.value, link: formAddElement.elements.link.value }, itemTemplate)
+    cards.prepend(createNewCard({name: formAddElement.elements.name.value, link: formAddElement.elements.link.value }))
     closePopup(popupAddElement)
-    cards.prepend(newCard.createCard());
 })
 
 //закрыть попап добавление карточки по клику на х
@@ -59,47 +61,8 @@ popupAddCloseElement.addEventListener('click', () => {
 popupAddOpenElement.addEventListener('click', () => {
     openPopup(popupAddElement);
     formAddElement.reset()
-    const saveButtonAdd = document.querySelector('.popup__save-button_add')
-    formValidatorAdd._disableButton(saveButtonAdd, validationConfig)
+    formValidatorAdd._disableButton(validationConfig.submitButtonSelector, validationConfig)
 })
-
-//закрыть по ESC
-const closePopupByKeydownOnESC = function (evt) {
-
-    if (evt.key !== 'Escape') {
-        return;
-    }
-    const popupOpened = document.querySelector('.popup_opened');
-    closePopup(popupOpened);
-};
-
-//закрыть по клику на оверлей
-const closePopupByClickOnOverlay = function (evt) {
-    if (evt.target !== evt.currentTarget) {
-        return;
-    }
-    const popupOpened = document.querySelector('.popup_opened');
-    closePopup(popupOpened);
-};
-
-//закрыть попап
-function closePopup (item) {
-    item.classList.remove('popup_opened');
-    document.removeEventListener('keydown', closePopupByKeydownOnESC);
-    popupList.forEach((popupList) => {
-        popupList.removeEventListener('click', closePopupByClickOnOverlay)
-    });
-}
-
-//открыть попап
-function openPopup (item) {
-    item.classList.add('popup_opened');
-    document.addEventListener('keydown', closePopupByKeydownOnESC);
-    popupList.forEach((popupList) => {
-        popupList.addEventListener('click', closePopupByClickOnOverlay)
-    });
-
-}
 
 //редактировать профиль
 formEditElement.addEventListener('submit', (evt) => {
