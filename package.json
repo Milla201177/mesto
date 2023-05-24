@@ -1,0 +1,14 @@
+{
+  "name": "mesto",
+  "version": "0.0.1",
+  "description": "Интерактивный сайт для путешественников и мечтателей, куда можно добавлять фотографии, удалять их и ставить лайки.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lasskaia Liudmila",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.6.4"
+  }
+}
