@@ -5,7 +5,6 @@ export default class Section {
         this._renderer = renderer
     }
 
-//добавить карточки из массива
     addCard() {
         this._items.forEach(element => {
             this.addItem(element)

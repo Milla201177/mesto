@@ -5,6 +5,7 @@ import PopupWithImage from "../components/popupWithImage.js";
 import Section from "../components/section.js";
 import UserInfo from "../components/userInfo.js";
 import PopupWithForm from "../components/popupWithForm.js";
+import '../../pages/index.css'
 
 const formValidatorEdit = new FormValidator(validationConfig, formEditElement)
 formValidatorEdit.enableValidation()
@@ -13,12 +14,10 @@ formValidatorAdd.enableValidation()
 
 const popupWithImage = new PopupWithImage('.popup_type_img')
 const userInfo = new UserInfo()
-const popupFormEdit = new PopupWithForm('.popup_type_edit', (data) => {
-    userInfo.setUserInfo(data);
+const popupFormEdit = new PopupWithForm('.popup_type_edit', (user) => {
+    userInfo.setUserInfo(user);
 })
-const section = new Section({
-    items: initialCards,
-    renderer: (element) => {
+const section = new Section({items: initialCards, renderer: (element) => {
         const newCard = new Card(element, itemTemplate, popupWithImage.open)
         return newCard.createCard()
     }

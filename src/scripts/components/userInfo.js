@@ -9,9 +9,9 @@ export default class UserInfo {
             job: this._jobProfile.textContent
         }
     }
-    setUserInfo(dataUser) {
-        this._nameProfile.textContent = dataUser.username;
-        this._jobProfile.textContent = dataUser.job;
+    setUserInfo(user) {
+        this._nameProfile.textContent = user.username;
+        this._jobProfile.textContent = user.job;
     }
 }
 
