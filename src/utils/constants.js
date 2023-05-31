@@ -1,4 +1,4 @@
-export {initialCards, validationConfig, formEditElement, formAddElement, popupEditOpenElement, popupAddOpenElement, itemTemplate}
+export {initialCards, validationConfig, popupEditOpenElement, popupAddOpenElement, itemTemplate, info}
 const initialCards = [
     {
         cardname: 'Архыз',
@@ -32,8 +32,10 @@ const validationConfig = {
     inactiveButtonClass: 'popup__btn-disabled',
     inputErrorClass: 'popup__input_type_error'
 }
-const formEditElement = document.forms.formEdit;
-const formAddElement = document.forms.formAdd;
+const info = {
+    nameSelector: '.profile__name',
+    jobSelector: '.profile__job'
+}
 const popupEditOpenElement = document.querySelector('.profile__edit-button');
 const popupAddOpenElement = document.querySelector('.profile__add-button');
 const itemTemplate = "#template";

@@ -1,13 +1,9 @@
-const cssnano = require('cssnano')
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
 
 module.exports = {
     plugins: [
-        [
-            "postcss-preset-env",
-            {
-                // Options
-            },
-        ],
+        autoprefixer,
         cssnano({ preset: 'default' })
-    ],
+    ]
 };

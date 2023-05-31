@@ -1,22 +1,31 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const {postcss} = require("cssnano");
 
 module.exports = {
-    entry: './src/scripts/pages/index.js',
+    entry: '/src/pages/index.js',
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, 'dist'),
+        publicPath: '',
     },
+
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'My App',
             template: './src/index.html'
         }),
+        new CleanWebpackPlugin(),
         new MiniCssExtractPlugin()
     ],
-    devtool: 'inline-source-map',
+
+    mode: 'development',
+    devServer: {
+        static: path.resolve(__dirname, './dist'),
+        open: true,
+        compress: true,
+        port: 8080
+    },
 
     module: {
         rules: [
@@ -36,16 +45,10 @@ module.exports = {
                 'postcss-loader'],
             },
             {
-                test: /\.(svg|jpg)$/i,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            esModule: false
-                        }
-                    },
-                ],
+                test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
+                type: 'asset/resource',
             },
         ],
     },
 }
+

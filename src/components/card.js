@@ -23,7 +23,8 @@ export default class Card {
     }
 
     _deleteCard = () => {
-        this._cloneTemplateElement.remove()
+        this._cloneTemplateElement.remove();
+        this._cloneTemplateElement = null;
     }
 
     handleCardClick = () => {
