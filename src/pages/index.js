@@ -30,6 +30,11 @@ const popupFormAdd = new PopupWithForm('.popup_type_add', (data) => {
     section.addItem(data);
 })
 
+popupAddOpenElement.addEventListener('click', () => {
+    popupFormAdd.open();
+    formValidatorAdd.disableButton()
+})
+
 popupEditOpenElement.addEventListener('click', () => {
     popupFormEdit.setInputValues(userInfo.getUserInfo())
     popupFormEdit.open()

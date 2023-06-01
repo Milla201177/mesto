@@ -9,8 +9,6 @@ export default class Popup {
     open() {
         this._popup.classList.add('popup_opened');
         document.addEventListener('keydown', this._handleEscClose);
-        this._saveButtonAdd.setAttribute('disabled', '');
-        this._saveButtonAdd.classList.add('popup__btn-disabled');
     }
 
     close() {

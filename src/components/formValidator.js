@@ -18,7 +18,7 @@ export default class FormValidator {
         this.formButton.removeAttribute('disabled');
     };
 
-    _disableButton = () => {
+    disableButton = () => {
         this.formButton.classList.add(this.inactiveButtonClass);
         this.formButton.setAttribute('disabled', true);
     };
@@ -44,12 +44,12 @@ export default class FormValidator {
     };
 
     _setEventListeners = () => {
-        this._disableButton(this.formButton)
+        this.disableButton(this.formButton)
         this.formInputs.forEach(input => {
             input.addEventListener('input', () => {
                 this._checkInputValidity(input)
                 if (this._hasInvalidInput()) {
-                    this._disableButton(this.formButton)
+                    this.disableButton(this.formButton)
                 } else {
                     this._enableButton(this.formButton)
                 }
